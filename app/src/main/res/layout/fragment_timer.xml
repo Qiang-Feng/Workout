@@ -1,12 +1,143 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.qiang.workout.Fragments.TimerFragment">
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <TextView
+    <!-- Circular progress bar -->
+    <RelativeLayout
+        android:id="@+id/progress_circular_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="This is the timer fragment."/>
+        android:layout_height="wrap_content"
+        android:gravity="bottom">
 
-</FrameLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="325dp"
+            android:layout_height="325dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:max="100"
+            android:progress="100"
+            android:progressDrawable="@drawable/circular_underlay">
+        </ProgressBar>
+
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="325dp"
+            android:layout_height="325dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:max="10000"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular"
+            android:rotation="-90">
+        </ProgressBar>
+
+        <!-- Time -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp">
+
+            <TextView
+                android:id="@+id/text_time_minutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00"
+                android:textSize="60dp">
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:textSize="60dp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/text_time_seconds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00"
+                android:textSize="60dp">
+            </TextView>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Controls -->
+    <Button
+        android:id="@+id/button_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progress_circular_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/colorAccent"
+        android:paddingBottom="@dimen/button_padding_vertical"
+        android:paddingLeft="@dimen/button_padding_horizontal"
+        android:paddingRight="@dimen/button_padding_horizontal"
+        android:paddingTop="@dimen/button_padding_vertical"
+        android:text="@string/button_start"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/button_text">
+    </Button>
+
+    <RelativeLayout
+        android:id="@+id/pause_stop_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progress_circular_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:visibility="invisible">
+
+        <Button
+            android:id="@+id/button_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:paddingBottom="@dimen/button_padding_vertical"
+            android:paddingLeft="@dimen/button_padding_horizontal"
+            android:paddingRight="@dimen/button_padding_horizontal"
+            android:paddingTop="@dimen/button_padding_vertical"
+            android:text="@string/button_pause"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/button_text">
+        </Button>
+
+        <Button
+            android:id="@+id/button_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/button_pause"
+            android:backgroundTint="@color/colorAccent"
+            android:paddingBottom="@dimen/button_padding_vertical"
+            android:paddingLeft="@dimen/button_padding_horizontal"
+            android:paddingRight="@dimen/button_padding_horizontal"
+            android:paddingTop="@dimen/button_padding_vertical"
+            android:text="@string/button_stop"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/button_text">
+        </Button>
+
+        <Button
+            android:id="@+id/button_resume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/button_stop"
+            android:backgroundTint="@color/colorAccent"
+            android:paddingBottom="@dimen/button_padding_vertical"
+            android:paddingLeft="22dp"
+            android:paddingRight="23dp"
+            android:paddingTop="@dimen/button_padding_vertical"
+            android:text="@string/button_resume"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/button_text"
+            android:visibility="invisible">
+        </Button>
+    </RelativeLayout>
+</RelativeLayout>

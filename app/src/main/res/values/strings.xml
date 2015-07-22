@@ -19,4 +19,14 @@
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+
+    <!-- Buttons -->
+    <string name="button_start">Start</string>
+    <string name="button_stop">Stop</string>
+    <string name="button_pause">Pause</string>
+    <string name="button_resume">Resume</string>
+
+    <!-- Misc -->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>
