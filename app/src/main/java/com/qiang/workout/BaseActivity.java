@@ -1,5 +1,7 @@
 package com.qiang.workout;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
@@ -9,8 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.qiang.workout.Fragments.ProfilesFragment;
+import com.qiang.workout.Fragments.TimerFragment;
 
 public class BaseActivity extends AppCompatActivity
 {
@@ -68,6 +74,45 @@ public class BaseActivity extends AppCompatActivity
 
 		// Displays the drawerItemStrings array in the navigation drawer list
 		drawerView.setAdapter(new ArrayAdapter<>(this, R.layout.navigation_drawer_item, drawerItemStrings));
+
+		// Handles item selection in the navigation drawer
+		drawerView.setOnItemClickListener(new ListView.OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				selectItem(position);
+			}
+		});
+
+		// Selects first item (default) in navigation drawer to be displayed
+		selectItem(0);
+	}
+
+	private void selectItem(int position)
+	{
+		Fragment fragment = null;
+		String itemSelected = drawerItemStrings[position];
+
+		// Sets up fragment object corresponding to the chosen item
+		if (itemSelected.equals(getString(R.string.navigation_item_timer)))
+		{
+			fragment = new TimerFragment();
+		}
+		else if (itemSelected.equals(getString(R.string.navigation_item_profiles)))
+		{
+			fragment = new ProfilesFragment();
+		}
+
+		// Replaces content_frame with the fragment corresponding to item selected in navigation drawer
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.content_frame, fragment)
+				.commit();
+
+		setTitle(drawerItemStrings[position]);      // Changes the action bar title to corresponding item user has selected
+		drawerView.setItemChecked(position, true);  // Sets item selected by user as checked
+		drawerLayout.closeDrawer(drawerView);       // Closes the navigation drawer
 	}
 
 	@Override
