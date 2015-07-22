@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:height="@dimen/navigation_drawer_item_height"
+          android:gravity="center_vertical"
+          android:orientation="vertical"
+          android:paddingBottom="@dimen/navigation_drawer_item_padding_vertical"
+          android:paddingLeft="@dimen/navigation_drawer_item_padding_horizontal"
+          android:paddingRight="@dimen/navigation_drawer_item_padding_horizontal"
+          android:paddingTop="@dimen/navigation_drawer_item_padding_vertical"
+          android:textAppearance="?android:attr/textAppearanceListItemSmall"
+          android:textColor="@color/navigation_drawer_item_text">
+</TextView>
