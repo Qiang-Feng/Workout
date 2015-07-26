@@ -1,6 +1,11 @@
 package com.qiang.workout.Fragments;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,8 +15,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.qiang.workout.NewProfileActivity;
 import com.qiang.workout.R;
 import com.qiang.workout.Utilities.CountDown;
+import com.qiang.workout.Utilities.DBHandler;
 
 public class TimerFragment extends Fragment
 {
@@ -112,6 +119,31 @@ public class TimerFragment extends Fragment
 			}
 		});
 
+		// If the user has no profiles...
+		SQLiteDatabase db = new DBHandler(getActivity(), null, null, 1).getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT '1' FROM " + DBHandler.TABLE_PROFILES, null);
+		cursor.moveToFirst();
+
+		if (cursor.getCount() == 0)
+		{
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setMessage("Looks like you don't have any profiles!");
+
+			builder.setPositiveButton(R.string.new_profile, new DialogInterface.OnClickListener()
+			{
+				@Override
+				public void onClick(DialogInterface dialog, int which)
+				{
+					Intent intent = new Intent(getActivity(), NewProfileActivity.class);
+					startActivity(intent);
+				}
+			});
+
+			builder.create().show();
+		}
+
+		cursor.close();
+
 		return view;
 	}
 
@@ -121,8 +153,7 @@ public class TimerFragment extends Fragment
 		if (timeChosen < 10)
 		{
 			textTime.setText("0" + Integer.toString(timeChosen));
-		}
-		else
+		} else
 		{
 			textTime.setText(Integer.toString(timeChosen));
 		}
@@ -151,8 +182,7 @@ public class TimerFragment extends Fragment
 				if (minutesLeft < 10)
 				{
 					textTimeMinutes.setText("0" + Long.toString(minutesLeft));
-				}
-				else
+				} else
 				{
 					textTimeMinutes.setText(Long.toString(minutesLeft));
 				}
@@ -161,8 +191,7 @@ public class TimerFragment extends Fragment
 				if (secondsLeft < 10)
 				{
 					textTimeSeconds.setText("0" + Long.toString(secondsLeft));
-				}
-				else
+				} else
 				{
 					textTimeSeconds.setText(Long.toString(secondsLeft));
 				}
