@@ -7,6 +7,7 @@
     <!-- Action bar titles -->
     <string name="title_timer">Timer</string>
     <string name="title_profiles">Profiles</string>
+    <string name="title_new_profile">New Profile</string>
 
     <!-- Navigation drawer -->
     <string name="navigation_item_timer">Timer</string>
@@ -26,7 +27,11 @@
     <string name="button_pause">Pause</string>
     <string name="button_resume">Resume</string>
 
+    <!-- New profile activity -->
+    <string name="new_profile_name">Enter a name</string>
+
     <!-- Misc -->
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="new_profile">New Profile</string>
 </resources>

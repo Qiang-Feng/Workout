@@ -17,4 +17,7 @@
     <dimen name="button_text">18sp</dimen>
     <dimen name="button_padding_horizontal">30dp</dimen>
     <dimen name="button_padding_vertical">15dp</dimen>
+
+    <!-- Misc -->
+    <dimen name="vertical_divider_margin_vertical">14dp</dimen>
 </resources>

@@ -5,6 +5,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#F44336</color>
     <color name="colorBackground">#FFFFFF</color>
+    <color name="colorDivider">#EFEFEF</color>
 
     <!-- Navigation drawer -->
     <color name="navigation_drawer_background">#FFFFFF</color>
