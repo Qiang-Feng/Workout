@@ -1,9 +1,13 @@
 package com.qiang.workout;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.qiang.workout.Interfaces.TimeSelectFragmentListener;
@@ -11,8 +15,14 @@ import com.qiang.workout.Utilities.TextTimeClickListener;
 
 public class NewProfileActivity extends AppCompatActivity implements TimeSelectFragmentListener
 {
+	private EditText name;
+	private EditText repeatNumber;
+
 	private TextView textTimeMinutes;
 	private TextView textTimeSeconds;
+	private TextView timeError;
+
+	private CheckBox repeat;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -20,11 +30,18 @@ public class NewProfileActivity extends AppCompatActivity implements TimeSelectF
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_profile);
 
-		textTimeMinutes = (TextView) findViewById(R.id.new_profile_text_time_minutes);  // Initialises textTimeMinutes
-		textTimeSeconds = (TextView) findViewById(R.id.new_profile_text_time_seconds);  // Initialises textTimeSeconds
+		// Initialising variables
+		name = (EditText) findViewById(R.id.new_profile_text_name);
+		repeatNumber = (EditText) findViewById(R.id.new_profile_text_repeat);
 
-		textTimeMinutes.setOnClickListener(new TextTimeClickListener(true, this));      // Sets the onClickListener for textTimeMinutes
-		textTimeSeconds.setOnClickListener(new TextTimeClickListener(false, this));     // Sets the onClickListener for textTimeSeconds
+		textTimeMinutes = (TextView) findViewById(R.id.new_profile_text_time_minutes);
+		textTimeSeconds = (TextView) findViewById(R.id.new_profile_text_time_seconds);
+
+		repeat = (CheckBox) findViewById(R.id.new_profile_checkbox_repeat);
+
+		// Sets onClick listeners for minutes and seconds TextViews
+		textTimeMinutes.setOnClickListener(new TextTimeClickListener(true, this));
+		textTimeSeconds.setOnClickListener(new TextTimeClickListener(false, this));
 	}
 
 	private void setTextTime(TextView textTime, int timeChosen)
@@ -50,14 +67,38 @@ public class NewProfileActivity extends AppCompatActivity implements TimeSelectF
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-
-		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings)
+		// Handles item selection in action bar
+		if (item.getItemId() == R.id.action_save_profile)
 		{
+			boolean isError = false;
+
+			if (name.getText().length() == 0)
+			{
+				isError = true;
+				name.setError("Name is required");
+			}
+
+			if (textTimeMinutes.getText().equals("00") && textTimeSeconds.getText().equals("00"))
+			{
+				isError = true;
+				timeError = (TextView) findViewById(R.id.new_profile_text_time_error);
+				timeError.setError("Time is required");
+			}
+
+			if (repeat.isChecked() && repeatNumber.getText().length() == 0)
+			{
+				isError = true;
+				repeatNumber.setError("Number of laps is required");
+			}
+
+			if (!isError)
+			{
+				addProfile();
+			}
+		}
+		else if (item.getItemId() == android.R.id.home)
+		{
+			displayCancelDialog();
 			return true;
 		}
 
@@ -65,8 +106,52 @@ public class NewProfileActivity extends AppCompatActivity implements TimeSelectF
 	}
 
 	@Override
+	public void onBackPressed()
+	{
+		displayCancelDialog();
+	}
+
+	private void addProfile()
+	{
+
+	}
+
+	private void displayCancelDialog()
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Cancel");
+		builder.setMessage("Are you sure you want to discard this profile?");
+
+		builder.setPositiveButton(R.string.keep_editing, new DialogInterface.OnClickListener()
+		{
+			@Override
+			public void onClick(DialogInterface dialog, int which)
+			{
+
+			}
+		});
+
+		builder.setNegativeButton(R.string.discard, new DialogInterface.OnClickListener()
+		{
+			@Override
+			public void onClick(DialogInterface dialog, int which)
+			{
+				// Closes this activity and directs users back to previous activity
+				finish();
+			}
+		});
+
+		builder.create().show();
+	}
+
+	@Override
 	public void onFinishTimeSelectFragment(boolean isMinutes, int timeChosen)
 	{
+		if (timeChosen != 0)
+		{
+			timeError.setError(null);
+		}
+
 		if (isMinutes)
 		{
 			setTextTime(textTimeMinutes, timeChosen);

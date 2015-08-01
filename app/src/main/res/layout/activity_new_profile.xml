@@ -63,6 +63,16 @@
         </TextView>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/new_profile_text_time_error"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignTop="@+id/text_time_container"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="14dp"
+        android:layout_toEndOf="@+id/text_time_container">
+    </TextView>
+
     <View
         android:id="@+id/new_profile_divider_2"
         android:layout_width="fill_parent"
@@ -85,17 +95,17 @@
     </CheckBox>
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/new_profile_text_repeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/new_profile_text_name"
         android:layout_below="@+id/new_profile_divider_2"
         android:background="@null"
         android:digits="0123456789"
-        android:gravity="right"
         android:hint="Enter number of laps"
         android:inputType="number"
-        android:maxWidth="200dp"
+        android:maxWidth="240dp"
+        android:minWidth="200dp"
         android:singleLine="true">
     </EditText>
 
@@ -103,7 +113,7 @@
         android:id="@+id/new_profile_divider_3"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/editText"
+        android:layout_below="@id/new_profile_text_repeat"
         android:layout_marginBottom="@dimen/vertical_divider_margin_vertical"
         android:layout_marginTop="@dimen/vertical_divider_margin_vertical"
         android:background="@color/colorDivider">
