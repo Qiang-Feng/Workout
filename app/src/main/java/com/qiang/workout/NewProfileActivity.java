@@ -38,6 +38,7 @@ public class NewProfileActivity extends AppCompatActivity implements TimeSelectF
 
 		textTimeMinutes = (TextView) findViewById(R.id.new_profile_text_time_minutes);
 		textTimeSeconds = (TextView) findViewById(R.id.new_profile_text_time_seconds);
+		timeError = (TextView) findViewById(R.id.new_profile_text_time_error);
 
 		repeat = (CheckBox) findViewById(R.id.new_profile_checkbox_repeat);
 
@@ -82,7 +83,6 @@ public class NewProfileActivity extends AppCompatActivity implements TimeSelectF
 			if (textTimeMinutes.getText().equals("00") && textTimeSeconds.getText().equals("00"))
 			{
 				isError = true;
-				timeError = (TextView) findViewById(R.id.new_profile_text_time_error);
 				timeError.setError("Time is required");
 			}
 
