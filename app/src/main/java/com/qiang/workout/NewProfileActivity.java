@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.qiang.workout.Interfaces.TimeSelectFragmentListener;
+import com.qiang.workout.Models.Profile;
+import com.qiang.workout.Utilities.DBHandler;
 import com.qiang.workout.Utilities.TextTimeClickListener;
 
 public class NewProfileActivity extends AppCompatActivity implements TimeSelectFragmentListener
@@ -49,8 +51,7 @@ public class NewProfileActivity extends AppCompatActivity implements TimeSelectF
 		if (timeChosen < 10)
 		{
 			textTime.setText("0" + Integer.toString(timeChosen));
-		}
-		else
+		} else
 		{
 			textTime.setText(Integer.toString(timeChosen));
 		}
@@ -94,9 +95,9 @@ public class NewProfileActivity extends AppCompatActivity implements TimeSelectF
 			if (!isError)
 			{
 				addProfile();
+				finish();
 			}
-		}
-		else if (item.getItemId() == android.R.id.home)
+		} else if (item.getItemId() == android.R.id.home)
 		{
 			displayCancelDialog();
 			return true;
@@ -113,7 +114,14 @@ public class NewProfileActivity extends AppCompatActivity implements TimeSelectF
 
 	private void addProfile()
 	{
+		Profile profile = new Profile(name.getText().toString());
+		profile.setMinutes(Integer.parseInt(textTimeMinutes.getText().toString()));
+		profile.setSeconds(Integer.parseInt(textTimeSeconds.getText().toString()));
+		profile.setRepeat(repeat.isChecked());
+		profile.setRepeatNumber(Integer.parseInt(repeatNumber.getText().toString()));
 
+		DBHandler dbHandler = new DBHandler(this, null, null, 1);
+		dbHandler.addProfile(profile);
 	}
 
 	private void displayCancelDialog()
@@ -155,8 +163,7 @@ public class NewProfileActivity extends AppCompatActivity implements TimeSelectF
 		if (isMinutes)
 		{
 			setTextTime(textTimeMinutes, timeChosen);
-		}
-		else
+		} else
 		{
 			setTextTime(textTimeSeconds, timeChosen);
 		}
