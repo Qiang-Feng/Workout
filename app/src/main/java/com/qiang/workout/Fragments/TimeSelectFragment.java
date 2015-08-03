@@ -27,6 +27,8 @@ public class TimeSelectFragment extends DialogFragment
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());   // Initialise builder variable as a new AlertDialog object
 		final NumberPicker picker = new NumberPicker(getActivity());            // Initialises picker variable
 
+		picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS); // Disable soft keyboard on NumberPicker
+
 		// Sets appropriate maximum values for seconds and minutes
 		if (isMinutes)
 		{
