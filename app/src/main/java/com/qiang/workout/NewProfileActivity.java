@@ -17,6 +17,8 @@ import com.qiang.workout.Utilities.TextTimeClickListener;
 
 public class NewProfileActivity extends AppCompatActivity implements TimeSelectFragmentListener
 {
+	public static final int PROFILE_ADDED = 1;
+
 	private EditText name;
 	private EditText repeatNumber;
 
@@ -95,6 +97,7 @@ public class NewProfileActivity extends AppCompatActivity implements TimeSelectF
 			if (!isError)
 			{
 				addProfile();
+				setResult(PROFILE_ADDED);
 				finish();
 			}
 		} else if (item.getItemId() == android.R.id.home)
@@ -118,7 +121,7 @@ public class NewProfileActivity extends AppCompatActivity implements TimeSelectF
 		profile.setMinutes(Integer.parseInt(textTimeMinutes.getText().toString()));
 		profile.setSeconds(Integer.parseInt(textTimeSeconds.getText().toString()));
 		profile.setRepeat(repeat.isChecked());
-		profile.setRepeatNumber(Integer.parseInt(repeatNumber.getText().toString()));
+		profile.setRepeatNumber((repeat.isChecked()) ? Integer.parseInt(repeatNumber.getText().toString()) : 0);    // Only set user's repeatNumber if repeat is checked
 
 		DBHandler dbHandler = new DBHandler(this, null, null, 1);
 		dbHandler.addProfile(profile);
