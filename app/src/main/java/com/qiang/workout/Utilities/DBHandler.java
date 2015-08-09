@@ -15,6 +15,7 @@ public class DBHandler extends SQLiteOpenHelper
 {
 	// Common column names
 	public static final String COLUMN_ID = "id";
+
 	// Profiles table column names
 	public static final String TABLE_PROFILES = "profiles";
 	public static final String PROFILES_COLUMN_NAME = "name";
@@ -55,7 +56,6 @@ public class DBHandler extends SQLiteOpenHelper
     /*
         Profile table methods
     */
-
 	public void addProfile(Profile profile)
 	{
 		ContentValues values = new ContentValues();
@@ -69,6 +69,18 @@ public class DBHandler extends SQLiteOpenHelper
 
 		SQLiteDatabase db = getWritableDatabase();
 		db.insert(TABLE_PROFILES, null, values);
+	}
+
+	public int getProfilesCount()
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		Cursor cursor = db.rawQuery("SELECT '1' FROM " + TABLE_PROFILES, null);
+
+		int profilesCount = cursor.getCount();
+
+		cursor.close();
+
+		return profilesCount;
 	}
 
 	public List<Profile> allProfiles()
