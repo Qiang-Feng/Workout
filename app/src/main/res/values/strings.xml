@@ -27,6 +27,10 @@
     <string name="button_pause">Pause</string>
     <string name="button_resume">Resume</string>
 
+    <!-- Timer fragment -->
+    <string name="profile_spinner_default_text">No profile selected</string>
+    <string name="round_number_default_text">Round 0 of 0</string>
+
     <!-- New profile activity -->
     <string name="new_profile_name">Enter a name</string>
 
