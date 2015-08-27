@@ -40,4 +40,6 @@
     <string name="discard">Discard</string>
     <string name="keep_editing">Keep Editing</string>
     <string name="new_profile">New Profile</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

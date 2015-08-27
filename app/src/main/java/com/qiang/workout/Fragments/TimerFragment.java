@@ -24,7 +24,9 @@ import com.qiang.workout.Utilities.CountDown;
 import com.qiang.workout.Utilities.DBHandler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TimerFragment extends Fragment
 {
@@ -48,6 +50,7 @@ public class TimerFragment extends Fragment
 	private DBHandler dbHandler;
 
 	private Profile selectedProfile;
+	private Map<Integer, Integer> profileIDMap;
 
 	private int roundNumber = 1;
 	private boolean timerStarted = false;
@@ -75,6 +78,8 @@ public class TimerFragment extends Fragment
 
 		spinner = (Spinner) view.findViewById(R.id.profile_spinner);
 		profileSpinnerCard = (CardView) view.findViewById(R.id.profile_spinner_card);
+
+		profileIDMap = new HashMap<>();
 
 		dbHandler = new DBHandler(getActivity(), null, null, 1);
 
@@ -166,7 +171,7 @@ public class TimerFragment extends Fragment
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
 			{
 				// Create selected profile
-				selectedProfile = dbHandler.getProfile(position + 1);
+				selectedProfile = dbHandler.getProfile(profileIDMap.get(position));
 
 				// Set profile card text to profile name
 				textProfileSpinner.setText(selectedProfile.getName());
@@ -225,10 +230,14 @@ public class TimerFragment extends Fragment
 		List<Profile> profileList = dbHandler.allProfiles();
 		List<String> profilesString = new ArrayList<>();
 
-		// Adds each profile name to a list (to show in spinner)
-		for (Profile profile : profileList)
+        /*
+            Add each profile name to a list (to show in spinner)
+            Also updates the profileIDMap
+        */
+		for (int i = 0; i < profileList.size(); i++)
 		{
-			profilesString.add(profile.getName());
+			profilesString.add(i, profileList.get(i).getName());
+			profileIDMap.put(i, profileList.get(i).getID());
 		}
 
 		spinner.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_dropdown_item, profilesString));
