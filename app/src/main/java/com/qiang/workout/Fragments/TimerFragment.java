@@ -18,7 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.qiang.workout.Models.Profile;
-import com.qiang.workout.NewProfileActivity;
+import com.qiang.workout.ProfileActivity;
 import com.qiang.workout.R;
 import com.qiang.workout.Utilities.CountDown;
 import com.qiang.workout.Utilities.DBHandler;
@@ -180,7 +180,8 @@ public class TimerFragment extends Fragment
 				if (selectedProfile.isRepeat())
 				{
 					textRoundNumber.setText("Round 1 of " + selectedProfile.getRepeatNumber());
-				} else
+				}
+				else
 				{
 					textRoundNumber.setText("Round 1 of 1");
 				}
@@ -211,13 +212,14 @@ public class TimerFragment extends Fragment
 				public void onClick(DialogInterface dialog, int which)
 				{
 					// Launches new profile activity
-					Intent intent = new Intent(getActivity(), NewProfileActivity.class);
+					Intent intent = new Intent(getActivity(), ProfileActivity.class);
 					startActivityForResult(intent, 1);
 				}
 			});
 
 			builder.create().show();
-		} else
+		}
+		else
 		{
 			loadProfileSpinnerItems();
 		}
@@ -249,7 +251,8 @@ public class TimerFragment extends Fragment
 		if (timeChosen < 10)
 		{
 			textTime.setText("0" + Integer.toString(timeChosen));
-		} else
+		}
+		else
 		{
 			textTime.setText(Integer.toString(timeChosen));
 		}
@@ -312,7 +315,8 @@ public class TimerFragment extends Fragment
 
 					// Start next round
 					buttonStart.performClick();
-				} else
+				}
+				else
 				{
 					timerStarted = false;
 				}
@@ -326,7 +330,7 @@ public class TimerFragment extends Fragment
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		// Only update spinner items if profile has been added
-		if (resultCode == NewProfileActivity.PROFILE_ADDED)
+		if (resultCode == ProfileActivity.PROFILE_ADDED)
 		{
 			loadProfileSpinnerItems();
 

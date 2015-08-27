@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.qiang.workout.Models.Profile;
-import com.qiang.workout.NewProfileActivity;
+import com.qiang.workout.ProfileActivity;
 import com.qiang.workout.R;
 import com.qiang.workout.Utilities.DBHandler;
 
@@ -53,7 +53,7 @@ public class ProfilesFragment extends Fragment
 			public void onClick(View v)
 			{
 				// Launches new profile activity
-				Intent intent = new Intent(getActivity(), NewProfileActivity.class);
+				Intent intent = new Intent(getActivity(), ProfileActivity.class);
 				startActivityForResult(intent, 1);
 			}
 		});
@@ -105,7 +105,9 @@ public class ProfilesFragment extends Fragment
 		}
 		else if (item.getTitle().toString().equals(getResources().getString(R.string.edit)))
 		{
-			// TODO: Redirect to edit profile activity
+			Intent intent = new Intent(getActivity(), ProfileActivity.class);
+			intent.putExtra("profileID", profileIDMap.get(info.position));
+			startActivityForResult(intent, 1);
 		}
 
 		return super.onContextItemSelected(item);
@@ -114,8 +116,8 @@ public class ProfilesFragment extends Fragment
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-		// Only reload profile list if profile has been added
-		if (resultCode == NewProfileActivity.PROFILE_ADDED)
+		// Only reload profile list if profile has been added or edited
+		if (resultCode == ProfileActivity.PROFILE_ADDED || resultCode == ProfileActivity.PROFILE_EDITED)
 		{
 			// Reloads profile list
 			loadProfileList();

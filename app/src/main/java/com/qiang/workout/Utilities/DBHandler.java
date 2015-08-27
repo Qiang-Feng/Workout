@@ -121,7 +121,7 @@ public class DBHandler extends SQLiteOpenHelper
 						Integer.toString(profileID)
 				};
 
-		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PROFILES + " WHERE id = ?", whereArgs);
+		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PROFILES + " WHERE " + COLUMN_ID + " = ?", whereArgs);
 		cursor.moveToFirst();
 
 		// Creates a new Profile object with data from database
@@ -137,6 +137,47 @@ public class DBHandler extends SQLiteOpenHelper
 		return profile;
 	}
 
+	public void saveEditedProfile(Profile profile)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		String[] profileExistsArgs = new String[]
+				{
+						Integer.toString(profile.getID())
+				};
+		Cursor profileExists = db.rawQuery("SELECT '1' FROM " + TABLE_PROFILES + " WHERE " + COLUMN_ID + " = ?", profileExistsArgs);
+
+		// Only update if profile exists
+		if (profileExists.getCount() != 0)
+		{
+			String[] updateQueryArgs = new String[]
+					{
+							profile.getName(),
+							Integer.toString(profile.getMinutes()),
+							Integer.toString(profile.getSeconds()),
+							Integer.toString((profile.isRepeat()) ? 1 : 0),
+							Integer.toString(profile.getRepeatNumber()),
+							Integer.toString(profile.getID())
+					};
+
+			String updateQuery = "UPDATE " + TABLE_PROFILES + " SET "
+					+ PROFILES_COLUMN_NAME + " = ?,"
+					+ PROFILES_COLUMN_MINUTES + " = ?,"
+					+ PROFILES_COLUMN_SECONDS + " = ?,"
+					+ PROFILES_COLUMN_REPEAT + " = ?,"
+					+ PROFILES_COLUMN_REPEAT_NUMBER + " = ?"
+					+ " WHERE " + COLUMN_ID + " = ?";
+
+			db.execSQL(updateQuery, updateQueryArgs);
+		}
+		else
+		{
+			// Just add the profile
+			addProfile(profile);
+		}
+
+		profileExists.close();
+	}
+
 	public void deleteProfile(int profileID)
 	{
 		SQLiteDatabase db = getWritableDatabase();
@@ -144,6 +185,6 @@ public class DBHandler extends SQLiteOpenHelper
 				{
 						Integer.toString(profileID)
 				};
-		db.delete(TABLE_PROFILES, "id = ?", whereArgs);
+		db.delete(TABLE_PROFILES, COLUMN_ID + " = ?", whereArgs);
 	}
 }

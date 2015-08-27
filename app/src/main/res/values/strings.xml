@@ -7,7 +7,9 @@
     <!-- Action bar titles -->
     <string name="title_timer">Timer</string>
     <string name="title_profiles">Profiles</string>
+    <string name="title_profile_common">Profile</string>
     <string name="title_new_profile">New Profile</string>
+    <string name="title_edit_profile">Edit Profile</string>
 
     <!-- Navigation drawer -->
     <string name="navigation_item_timer">Timer</string>
@@ -31,8 +33,8 @@
     <string name="profile_spinner_default_text">No profile selected</string>
     <string name="round_number_default_text">Round 0 of 0</string>
 
-    <!-- New profile activity -->
-    <string name="new_profile_name">Enter a name</string>
+    <!-- Profile activity -->
+    <string name="profile_name">Enter a name</string>
 
     <!-- Misc -->
     <string name="ok">OK</string>
