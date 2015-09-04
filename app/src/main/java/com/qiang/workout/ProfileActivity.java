@@ -67,8 +67,8 @@ public class ProfileActivity extends AppCompatActivity implements TimeSelectFrag
 
 			// Sets input box values for profile loaded from database
 			name.setText(profile.getName());
-			textTimeMinutes.setText(Integer.toString(profile.getMinutes()));
-			textTimeSeconds.setText(Integer.toString(profile.getSeconds()));
+			setTextTime(textTimeMinutes, profile.getMinutes());
+			setTextTime(textTimeSeconds, profile.getSeconds());
 			repeat.setChecked(profile.isRepeat());
 			repeatNumber.setText(Integer.toString(profile.getRepeatNumber()));
 		}
