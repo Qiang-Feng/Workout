@@ -125,6 +125,10 @@ public class TimerFragment extends Fragment
 				setTextTime(textTimeSeconds, selectedProfile.getSeconds());
 				progressBar.setProgress(0);
 
+				// Reset round number
+				roundNumber = 1;
+				setRoundNumber(roundNumber, selectedProfile.getRepeatNumber());
+
 				// Hide resume button and show pause button
 				buttonResume.setVisibility(View.INVISIBLE);
 				buttonPause.setVisibility(View.VISIBLE);
@@ -161,6 +165,7 @@ public class TimerFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
+				// Shows profile selection dropdown only if timer has not been started
 				if (!timerStarted)
 				{
 					spinner.performClick();
@@ -183,11 +188,11 @@ public class TimerFragment extends Fragment
 				// Set round number text; If not repeated, set text to "Lap 1 of 1"
 				if (selectedProfile.isRepeat())
 				{
-					textRoundNumber.setText("Round 1 of " + selectedProfile.getRepeatNumber());
+					setRoundNumber(1, selectedProfile.getRepeatNumber());
 				}
 				else
 				{
-					textRoundNumber.setText("Round 1 of 1");
+					setRoundNumber(1, 1);
 				}
 
 				setTextTime(textTimeMinutes, selectedProfile.getMinutes());
@@ -315,7 +320,7 @@ public class TimerFragment extends Fragment
 				{
 					// Updates round number and display
 					roundNumber += 1;
-					textRoundNumber.setText("Round " + roundNumber + " of " + selectedProfile.getRepeatNumber());
+					setRoundNumber(roundNumber, selectedProfile.getRepeatNumber());
 
 					// Start next round
 					buttonStart.performClick();
@@ -328,6 +333,11 @@ public class TimerFragment extends Fragment
 		};
 
 		countDownTimer.start();
+	}
+
+	private void setRoundNumber(int roundNumber, int ofNumber)
+	{
+		textRoundNumber.setText("Round " + roundNumber+ " of " + ofNumber);
 	}
 
 	@Override
