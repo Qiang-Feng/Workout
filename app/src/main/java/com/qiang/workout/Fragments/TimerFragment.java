@@ -125,6 +125,10 @@ public class TimerFragment extends Fragment
 				setTextTime(textTimeSeconds, selectedProfile.getSeconds());
 				progressBar.setProgress(0);
 
+				// Hide resume button and show pause button
+				buttonResume.setVisibility(View.INVISIBLE);
+				buttonPause.setVisibility(View.VISIBLE);
+
 				// Hide pause and stop button; Show start button
 				pauseStopContainer.setVisibility(View.INVISIBLE);
 				buttonStart.setVisibility(View.VISIBLE);
