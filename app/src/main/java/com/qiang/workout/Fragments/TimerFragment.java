@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -55,6 +57,11 @@ public class TimerFragment extends Fragment
 	private int roundNumber = 1;
 	private boolean timerStarted = false;
 
+	private ToneGenerator toneGenerator;
+
+	public static final int INTERVAL_BEEP = ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD;
+	public static final int FINISHED_BEEP = ToneGenerator.TONE_CDMA_CALLDROP_LITE;
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -82,6 +89,8 @@ public class TimerFragment extends Fragment
 		profileIDMap = new HashMap<>();
 
 		dbHandler = new DBHandler(getActivity(), null, null, 1);
+
+		toneGenerator = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
 
 		// Handles pause button clicks
 		buttonPause.setOnClickListener(new View.OnClickListener()
@@ -322,12 +331,18 @@ public class TimerFragment extends Fragment
 					roundNumber += 1;
 					setRoundNumber(roundNumber, selectedProfile.getRepeatNumber());
 
+					// Plays interval beep sound
+					toneGenerator.startTone(INTERVAL_BEEP, 125);
+
 					// Start next round
 					buttonStart.performClick();
 				}
 				else
 				{
 					timerStarted = false;
+
+					// Plays finished beep sound
+					toneGenerator.startTone(FINISHED_BEEP, 125);
 				}
 			}
 		};
