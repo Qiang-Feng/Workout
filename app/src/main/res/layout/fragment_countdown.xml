@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:text="00"
-                android:textSize="60dp">
+                android:textSize="@dimen/time_text_size">
             </TextView>
 
             <TextView
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:text=":"
-                android:textSize="60dp">
+                android:textSize="@dimen/time_text_size">
             </TextView>
 
             <TextView
@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:text="00"
-                android:textSize="60dp">
+                android:textSize="@dimen/time_text_size">
             </TextView>
         </LinearLayout>
 

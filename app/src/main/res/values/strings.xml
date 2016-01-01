@@ -27,10 +27,15 @@
     <string name="button_stop">Stop</string>
     <string name="button_pause">Pause</string>
     <string name="button_resume">Resume</string>
+    <string name="button_save">Save</string>
+    <string name="button_reset">Reset</string>
 
     <!-- Timer fragment -->
     <string name="profile_spinner_default_text">No profile selected</string>
     <string name="round_number_default_text">Round 0 of 0</string>
+
+    <!-- Stopwatch fragment -->
+    <string name="category_spinner_default_text">No category selected</string>
 
     <!-- Profile activity -->
     <string name="profile_name">Enter a name</string>

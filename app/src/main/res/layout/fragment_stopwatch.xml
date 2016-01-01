@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:paddingBottom="@dimen/frame_padding_vertical"
@@ -6,9 +6,177 @@
              android:paddingRight="@dimen/frame_padding_horizontal"
              android:paddingTop="@dimen/frame_padding_vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="This is the stopwatch fragment."/>
+    <!-- Category spinner -->
+    <android.support.v7.widget.CardView
+        android:id="@+id/category_spinner_card"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardCornerRadius="2dp"
+        android:visibility="invisible">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Category:"
+                android:textSize="17dp">
+            </TextView>
+
+            <TextView
+                android:id="@+id/category_spinner_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="205dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-light"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:text="@string/category_spinner_default_text"
+                android:textSize="17dp">
+            </TextView>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <!-- Stopwatch -->
+    <Chronometer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/stopwatch"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="210dp"
+        android:textSize="@dimen/time_text_size"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#808080">
+    </Chronometer>
+
+    <!-- Controls -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stopwatch"
+        android:layout_marginTop="143dp">
+
+        <Button
+            android:id="@+id/button_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/colorAccent"
+            android:paddingBottom="@dimen/button_padding_vertical"
+            android:paddingLeft="@dimen/button_padding_horizontal"
+            android:paddingRight="@dimen/button_padding_horizontal"
+            android:paddingTop="@dimen/button_padding_vertical"
+            android:text="@string/button_start"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/button_text">
+        </Button>
+
+        <Button
+            android:id="@+id/button_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/colorAccent"
+            android:paddingBottom="@dimen/button_padding_vertical"
+            android:paddingLeft="@dimen/button_padding_horizontal"
+            android:paddingRight="@dimen/button_padding_horizontal"
+            android:paddingTop="@dimen/button_padding_vertical"
+            android:text="@string/button_pause"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/button_text"
+            android:visibility="invisible">
+        </Button>
+
+        <!-- Resume and Stop button -->
+        <RelativeLayout
+            android:id="@+id/resume_stop_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible">
+
+            <Button
+                android:id="@+id/button_resume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorAccent"
+                android:paddingBottom="@dimen/button_padding_vertical"
+                android:paddingLeft="@dimen/button_padding_horizontal"
+                android:paddingRight="@dimen/button_padding_horizontal"
+                android:paddingTop="@dimen/button_padding_vertical"
+                android:text="@string/button_resume"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/button_text">
+            </Button>
+
+            <Button
+                android:id="@+id/button_stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/button_resume"
+                android:backgroundTint="@color/colorAccent"
+                android:paddingBottom="@dimen/button_padding_vertical"
+                android:paddingLeft="@dimen/button_padding_horizontal"
+                android:paddingRight="@dimen/button_padding_horizontal"
+                android:paddingTop="@dimen/button_padding_vertical"
+                android:text="@string/button_stop"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/button_text">
+            </Button>
+        </RelativeLayout>
+
+        <!-- Save and reset button -->
+        <RelativeLayout
+            android:id="@+id/save_reset_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible">
+
+            <Button
+                android:id="@+id/button_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorAccent"
+                android:paddingBottom="@dimen/button_padding_vertical"
+                android:paddingLeft="@dimen/button_padding_horizontal"
+                android:paddingRight="@dimen/button_padding_horizontal"
+                android:paddingTop="@dimen/button_padding_vertical"
+                android:text="@string/button_save"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/button_text">
+            </Button>
+
+            <Button
+                android:id="@+id/button_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/button_save"
+                android:backgroundTint="@color/colorAccent"
+                android:paddingBottom="@dimen/button_padding_vertical"
+                android:paddingLeft="@dimen/button_padding_horizontal"
+                android:paddingRight="@dimen/button_padding_horizontal"
+                android:paddingTop="@dimen/button_padding_vertical"
+                android:text="@string/button_reset"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/button_text">
+            </Button>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
