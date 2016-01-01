@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.qiang.workout.Fragments.ProfilesFragment;
+import com.qiang.workout.Fragments.StopwatchFragment;
 import com.qiang.workout.Fragments.TimerFragment;
 
 public class BaseActivity extends AppCompatActivity
@@ -102,6 +103,10 @@ public class BaseActivity extends AppCompatActivity
 		else if (itemSelected.equals(getString(R.string.navigation_item_profiles)))
 		{
 			fragment = new ProfilesFragment();
+		}
+		else if (itemSelected.equals(getString(R.string.navigation_item_stopwatch)))
+		{
+			fragment = new StopwatchFragment();
 		}
 
 		// Replaces content_frame with the fragment corresponding to item selected in navigation drawer

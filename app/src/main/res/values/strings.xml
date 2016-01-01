@@ -14,10 +14,12 @@
     <!-- Navigation drawer -->
     <string name="navigation_item_timer">Timer</string>
     <string name="navigation_item_profiles">Profiles</string>
+    <string name="navigation_item_stopwatch">Stopwatch</string>
 
     <string-array name="navigation_drawer_items">
         <item>@string/navigation_item_timer</item>
         <item>@string/navigation_item_profiles</item>
+        <item>@string/navigation_item_stopwatch</item>
     </string-array>
 
     <string name="drawer_open">Open navigation drawer</string>
