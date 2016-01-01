@@ -15,9 +15,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.qiang.workout.Fragments.ProfilesFragment;
+import com.qiang.workout.Fragments.CountdownFragment;
+import com.qiang.workout.Fragments.CountdownProfilesFragment;
 import com.qiang.workout.Fragments.StopwatchFragment;
-import com.qiang.workout.Fragments.TimerFragment;
 
 public class BaseActivity extends AppCompatActivity
 {
@@ -96,13 +96,13 @@ public class BaseActivity extends AppCompatActivity
 		String itemSelected = drawerItemStrings[position];
 
 		// Sets up fragment object corresponding to the chosen item
-		if (itemSelected.equals(getString(R.string.navigation_item_timer)))
+		if (itemSelected.equals(getString(R.string.navigation_item_countdown)))
 		{
-			fragment = new TimerFragment();
+			fragment = new CountdownFragment();
 		}
-		else if (itemSelected.equals(getString(R.string.navigation_item_profiles)))
+		else if (itemSelected.equals(getString(R.string.navigation_item_countdown_profiles)))
 		{
-			fragment = new ProfilesFragment();
+			fragment = new CountdownProfilesFragment();
 		}
 		else if (itemSelected.equals(getString(R.string.navigation_item_stopwatch)))
 		{

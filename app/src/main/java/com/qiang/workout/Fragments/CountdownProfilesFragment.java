@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProfilesFragment extends Fragment
+public class CountdownProfilesFragment extends Fragment
 {
 	private ListView profilesView;
 	private List<String> profileStrings;
@@ -36,7 +36,7 @@ public class ProfilesFragment extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		// Inflates the view
-		View view = inflater.inflate(R.layout.fragment_profiles, container, false);
+		View view = inflater.inflate(R.layout.fragment_countdown_profiles, container, false);
 
 		// Initialise variables
 		profilesView = (ListView) view.findViewById(R.id.profiles_list);

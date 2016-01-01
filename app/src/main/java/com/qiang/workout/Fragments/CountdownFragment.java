@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TimerFragment extends Fragment
+public class CountdownFragment extends Fragment
 {
 	private Button buttonStart;
 	private Button buttonPause;
@@ -67,7 +67,7 @@ public class TimerFragment extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		// Inflates the view
-		final View view = inflater.inflate(R.layout.fragment_timer, container, false);
+		final View view = inflater.inflate(R.layout.fragment_countdown, container, false);
 
 		// Initialises variables
 		progressBar = (ProgressBar) view.findViewById(R.id.progress_circular);
