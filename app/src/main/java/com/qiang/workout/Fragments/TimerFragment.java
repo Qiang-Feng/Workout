@@ -343,6 +343,10 @@ public class TimerFragment extends Fragment
 
 					// Plays finished beep sound
 					toneGenerator.startTone(FINISHED_BEEP, 125);
+
+					// Reset round number
+					roundNumber = 1;
+					setRoundNumber(roundNumber, selectedProfile.getRepeatNumber());
 				}
 			}
 		};
