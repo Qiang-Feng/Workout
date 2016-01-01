@@ -346,7 +346,15 @@ public class CountdownFragment extends Fragment
 
 					// Reset round number
 					roundNumber = 1;
-					setRoundNumber(roundNumber, selectedProfile.getRepeatNumber());
+
+					if (selectedProfile.isRepeat())
+					{
+						setRoundNumber(roundNumber, selectedProfile.getRepeatNumber());
+					}
+					else
+					{
+						setRoundNumber(roundNumber, 1);
+					}
 				}
 			}
 		};
