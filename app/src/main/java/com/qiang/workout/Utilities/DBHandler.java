@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.qiang.workout.Models.Category;
 import com.qiang.workout.Models.Profile;
+import com.qiang.workout.Models.StopwatchTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +25,18 @@ public class DBHandler extends SQLiteOpenHelper
 	public static final String PROFILES_COLUMN_SECONDS = "seconds";
 	public static final String PROFILES_COLUMN_REPEAT = "repeat";
 	public static final String PROFILES_COLUMN_REPEAT_NUMBER = "repeatNumber";
-	private static final int DATABASE_VERSION = 1;
 
 	// Categories table
 	public static final String TABLE_CATEGORIES = "categories";
 	public static final String CATEGORIES_COLUMN_NAME = "name";
 
+	// Stopwatch times table
+	public static final String TABLE_STOPWATCH_TIMES = "stopwatchTimes";
+	public static final String STOPWATCH_TIMES_RECORD_DATE = "recordDate";
+	public static final String STOPWATCH_TIMES_TIME = "time";
+
 	private static final String DATABASE_NAME = "workout.db";
+	private static final int DATABASE_VERSION = 1;
 
 	public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version)
 	{
@@ -59,6 +65,15 @@ public class DBHandler extends SQLiteOpenHelper
 				+ ")";
 
 		db.execSQL(queryCategories);
+
+		// Create the stopwatch times table
+		String queryStopwatchTimes = "CREATE TABLE " + TABLE_STOPWATCH_TIMES + "("
+				+ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+				+ STOPWATCH_TIMES_RECORD_DATE + " INTEGER, "
+				+ STOPWATCH_TIMES_TIME + " INTEGER "
+				+ ")";
+
+		db.execSQL(queryStopwatchTimes);
 	}
 
 	@Override
@@ -294,5 +309,86 @@ public class DBHandler extends SQLiteOpenHelper
 		SQLiteDatabase db = getWritableDatabase();
 		String[] whereArgs = { Integer.toString(categoryID) };
 		db.delete(TABLE_CATEGORIES, COLUMN_ID + " = ?", whereArgs);
+	}
+
+	/*
+		Stopwatch times table methods
+	*/
+	public void addStopwatchTime(StopwatchTime stopwatchTime)
+	{
+		ContentValues values = new ContentValues();
+
+		// Adds values set in StopwatchTime object
+		values.put(STOPWATCH_TIMES_RECORD_DATE, stopwatchTime.getRecordDate());
+		values.put(STOPWATCH_TIMES_TIME, stopwatchTime.getTime());
+
+		SQLiteDatabase db = getWritableDatabase();
+		db.insert(TABLE_STOPWATCH_TIMES, null, values);
+	}
+
+	public int getStopwatchTimesCount()
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		Cursor cursor = db.rawQuery("SELECT '1' FROM " + TABLE_STOPWATCH_TIMES, null);
+
+		int stopwatchTimesCount = cursor.getCount();
+
+		cursor.close();
+
+		return stopwatchTimesCount;
+	}
+
+	public List<StopwatchTime> allStopwatchTimes()
+	{
+		List<StopwatchTime> stopwatchTimesList = new ArrayList<>();
+
+		SQLiteDatabase db = getWritableDatabase();
+		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_STOPWATCH_TIMES, null);
+
+		if (cursor.moveToFirst())
+		{
+			// Adds each stopwatch time to stopwatchTimesList
+			do
+			{
+				// Creates a new StopwatchTime object with data from database
+				StopwatchTime stopwatchTime = new StopwatchTime();
+				stopwatchTime.setID(cursor.getInt(0));
+				stopwatchTime.setRecordDate(cursor.getInt(1));
+				stopwatchTime.setTime(cursor.getInt(2));
+
+				stopwatchTimesList.add(stopwatchTime);
+			}
+			while (cursor.moveToNext());
+		}
+
+		cursor.close();
+
+		return stopwatchTimesList;
+	}
+
+	public StopwatchTime getStopwatchTime(int stopwatchTimeID)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		String[] whereArgs = { Integer.toString(stopwatchTimeID) };
+
+		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_STOPWATCH_TIMES + " WHERE " + COLUMN_ID + " = ?", whereArgs);
+		cursor.moveToFirst();
+
+		// Creates a new StopwatchTime object with data from database
+		StopwatchTime stopwatchTime = new StopwatchTime();
+		stopwatchTime.setID(cursor.getInt(0));
+		stopwatchTime.setRecordDate(cursor.getInt(1));
+		stopwatchTime.setTime(cursor.getInt(2));
+
+		cursor.close();
+
+		return stopwatchTime;
+	}
+
+	public void deleteStopwatchTime(int stopwatchTimeID)
+	{
+		SQLiteDatabase db = getWritableDatabase();
+		String[] whereArgs = { Integer.toString(stopwatchTimeID) };
+		db.delete(TABLE_STOPWATCH_TIMES, COLUMN_ID + " = ?", whereArgs);
 	}
 }
