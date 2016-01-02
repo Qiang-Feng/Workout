@@ -115,8 +115,8 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorAccent"
                 android:paddingBottom="@dimen/button_padding_vertical"
-                android:paddingLeft="@dimen/button_padding_horizontal"
-                android:paddingRight="@dimen/button_padding_horizontal"
+                android:paddingLeft="23dp"
+                android:paddingRight="22dp"
                 android:paddingTop="@dimen/button_padding_vertical"
                 android:text="@string/button_resume"
                 android:textColor="#FFFFFF"
@@ -149,31 +149,31 @@
             android:visibility="invisible">
 
             <Button
-                android:id="@+id/button_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorAccent"
-                android:paddingBottom="@dimen/button_padding_vertical"
-                android:paddingLeft="@dimen/button_padding_horizontal"
-                android:paddingRight="@dimen/button_padding_horizontal"
-                android:paddingTop="@dimen/button_padding_vertical"
-                android:text="@string/button_save"
-                android:textColor="#FFFFFF"
-                android:textSize="@dimen/button_text">
-            </Button>
-
-            <Button
                 android:id="@+id/button_reset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_toRightOf="@id/button_save"
                 android:backgroundTint="@color/colorAccent"
                 android:paddingBottom="@dimen/button_padding_vertical"
                 android:paddingLeft="@dimen/button_padding_horizontal"
                 android:paddingRight="@dimen/button_padding_horizontal"
                 android:paddingTop="@dimen/button_padding_vertical"
                 android:text="@string/button_reset"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/button_text">
+            </Button>
+
+            <Button
+                android:id="@+id/button_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/button_reset"
+                android:backgroundTint="@color/colorAccent"
+                android:paddingBottom="@dimen/button_padding_vertical"
+                android:paddingLeft="@dimen/button_padding_horizontal"
+                android:paddingRight="@dimen/button_padding_horizontal"
+                android:paddingTop="@dimen/button_padding_vertical"
+                android:text="@string/button_save"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/button_text">
             </Button>
