@@ -77,7 +77,7 @@ public class CountdownProfilesFragment extends Fragment
 		}
 
 		// Displays the profileStrings array in the profiles list
-		profilesView.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.profiles_list_item, profileStrings));
+		profilesView.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.list_item, profileStrings));
 	}
 
 

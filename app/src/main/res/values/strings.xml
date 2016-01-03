@@ -12,11 +12,13 @@
     <string name="navigation_item_countdown">Countdown</string>
     <string name="navigation_item_countdown_profiles">Countdown Profiles</string>
     <string name="navigation_item_stopwatch">Stopwatch</string>
+    <string name="navigation_item_stopwatch_categories">Stopwatch Categories</string>
 
     <string-array name="navigation_drawer_items">
         <item>@string/navigation_item_countdown</item>
         <item>@string/navigation_item_countdown_profiles</item>
         <item>@string/navigation_item_stopwatch</item>
+        <item>@string/navigation_item_stopwatch_categories</item>
     </string-array>
 
     <string name="drawer_open">Open navigation drawer</string>
@@ -48,4 +50,7 @@
     <string name="new_profile">New Profile</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="rename">Rename</string>
+    <string name="view_times">View Times</string>
+    <string name="view_graph">View Graph</string>
 </resources>

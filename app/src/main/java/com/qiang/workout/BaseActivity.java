@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 import com.qiang.workout.Fragments.CountdownFragment;
 import com.qiang.workout.Fragments.CountdownProfilesFragment;
+import com.qiang.workout.Fragments.StopwatchCategoriesFragment;
 import com.qiang.workout.Fragments.StopwatchFragment;
 
 public class BaseActivity extends AppCompatActivity
@@ -107,6 +108,10 @@ public class BaseActivity extends AppCompatActivity
 		else if (itemSelected.equals(getString(R.string.navigation_item_stopwatch)))
 		{
 			fragment = new StopwatchFragment();
+		}
+		else if (itemSelected.equals(getString(R.string.navigation_item_stopwatch_categories)))
+		{
+			fragment = new StopwatchCategoriesFragment();
 		}
 
 		// Replaces content_frame with the fragment corresponding to item selected in navigation drawer
