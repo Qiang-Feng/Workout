@@ -133,7 +133,7 @@ public class ProfileActivity extends AppCompatActivity implements TimeSelectFrag
             */
 			if (!isEditingProfile)
 			{
-				String[] profileArgs = new String[] {name.getText().toString()};
+				String[] profileArgs = { name.getText().toString().trim() };
 				Cursor profile = dbHandler.getReadableDatabase().rawQuery("SELECT '1' FROM " + DBHandler.TABLE_PROFILES + " WHERE name = ?", profileArgs);
 
 				if (profile.getCount() != 0)
@@ -173,7 +173,7 @@ public class ProfileActivity extends AppCompatActivity implements TimeSelectFrag
 
 	private void addProfile()
 	{
-		// Creates a new profile object with user's settings (to be inserted to the database)
+		// Creates a profile object with user's settings (to be inserted to the database)
 		Profile newProfile = new Profile(name.getText().toString().trim());
 		newProfile.setMinutes(Integer.parseInt(textTimeMinutes.getText().toString()));
 		newProfile.setSeconds(Integer.parseInt(textTimeSeconds.getText().toString()));
