@@ -113,6 +113,18 @@ public class DBHandler extends SQLiteOpenHelper
 		return profilesCount;
 	}
 
+	public boolean profileExists(int profileID)
+	{
+		String[] profileArgs = { Integer.toString(profileID) };
+		Cursor profile = getReadableDatabase().rawQuery("SELECT '1' FROM " + TABLE_PROFILES + " WHERE id = ?", profileArgs);
+
+		boolean profileExists = (profile.getCount() != 0);
+
+		profile.close();
+
+		return profileExists;
+	}
+
 	public List<Profile> allProfiles()
 	{
 		List<Profile> profileList = new ArrayList<>();
@@ -166,12 +178,8 @@ public class DBHandler extends SQLiteOpenHelper
 
 	public void saveEditedProfile(Profile profile)
 	{
-		SQLiteDatabase db = getWritableDatabase();
-		String[] profileExistsArgs = { Integer.toString(profile.getID()) };
-		Cursor profileExists = db.rawQuery("SELECT '1' FROM " + TABLE_PROFILES + " WHERE " + COLUMN_ID + " = ?", profileExistsArgs);
-
 		// Only update if profile exists
-		if (profileExists.getCount() != 0)
+		if (profileExists(profile.getID()))
 		{
 			String[] updateQueryArgs =
 			{
@@ -191,15 +199,13 @@ public class DBHandler extends SQLiteOpenHelper
 					+ PROFILES_COLUMN_REPEAT_NUMBER + " = ?"
 					+ " WHERE " + COLUMN_ID + " = ?";
 
-			db.execSQL(updateQuery, updateQueryArgs);
+			getWritableDatabase().execSQL(updateQuery, updateQueryArgs);
 		}
 		else
 		{
 			// Just add the profile
 			addProfile(profile);
 		}
-
-		profileExists.close();
 	}
 
 	public void deleteProfile(int profileID)
@@ -280,28 +286,26 @@ public class DBHandler extends SQLiteOpenHelper
 
 	public void saveEditedCategory(Category category)
 	{
-		SQLiteDatabase db = getWritableDatabase();
-		String[] categoryExistsArgs = { Integer.toString(category.getID()) };
-		Cursor categoryExists = db.rawQuery("SELECT '1' FROM " + TABLE_CATEGORIES + " WHERE " + COLUMN_ID + " = ?", categoryExistsArgs);
-
 		// Only update if category exists
-		if (categoryExists.getCount() != 0)
+		if (categoryExists(category.getID()))
 		{
-			String[] updateQueryArgs = { category.getName() };
+			String[] updateQueryArgs =
+			{
+				category.getName(),
+				Integer.toString(category.getID())
+			};
 
-			String updateQuery = "UPDATE " + CATEGORIES_COLUMN_NAME + " SET "
-					+ CATEGORIES_COLUMN_NAME + " = ?,"
+			String updateQuery = "UPDATE " + TABLE_CATEGORIES + " SET "
+					+ CATEGORIES_COLUMN_NAME + " = ?"
 					+ " WHERE " + COLUMN_ID + " = ?";
 
-			db.execSQL(updateQuery, updateQueryArgs);
+			getWritableDatabase().execSQL(updateQuery, updateQueryArgs);
 		}
 		else
 		{
 			// Just add the category
 			addCategory(category);
 		}
-
-		categoryExists.close();
 	}
 
 	public void deleteCategory(int categoryID)
@@ -309,6 +313,18 @@ public class DBHandler extends SQLiteOpenHelper
 		SQLiteDatabase db = getWritableDatabase();
 		String[] whereArgs = { Integer.toString(categoryID) };
 		db.delete(TABLE_CATEGORIES, COLUMN_ID + " = ?", whereArgs);
+	}
+
+	public boolean categoryExists(int categoryID)
+	{
+		String[] categoryArgs = { Integer.toString(categoryID) };
+		Cursor category = getReadableDatabase().rawQuery("SELECT '1' FROM " + TABLE_CATEGORIES + " WHERE id = ?", categoryArgs);
+
+		boolean categoryExists = (category.getCount() != 0);
+
+		category.close();
+
+		return categoryExists;
 	}
 
 	/*
