@@ -125,6 +125,18 @@ public class DBHandler extends SQLiteOpenHelper
 		return profileExists;
 	}
 
+	public boolean profileExists(String profileName)
+	{
+		String[] profileArgs = { profileName };
+		Cursor profile = getReadableDatabase().rawQuery("SELECT '1' FROM " + TABLE_PROFILES + " WHERE name = ?", profileArgs);
+
+		boolean profileExists = (profile.getCount() != 0);
+
+		profile.close();
+
+		return profileExists;
+	}
+
 	public List<Profile> allProfiles()
 	{
 		List<Profile> profileList = new ArrayList<>();
@@ -319,6 +331,18 @@ public class DBHandler extends SQLiteOpenHelper
 	{
 		String[] categoryArgs = { Integer.toString(categoryID) };
 		Cursor category = getReadableDatabase().rawQuery("SELECT '1' FROM " + TABLE_CATEGORIES + " WHERE id = ?", categoryArgs);
+
+		boolean categoryExists = (category.getCount() != 0);
+
+		category.close();
+
+		return categoryExists;
+	}
+
+	public boolean categoryExists(String categoryName)
+	{
+		String[] categoryArgs = { categoryName };
+		Cursor category = getReadableDatabase().rawQuery("SELECT '1' FROM " + TABLE_CATEGORIES + " WHERE name = ?", categoryArgs);
 
 		boolean categoryExists = (category.getCount() != 0);
 
