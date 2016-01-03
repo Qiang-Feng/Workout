@@ -127,17 +127,19 @@ public class ProfileActivity extends AppCompatActivity implements TimeSelectFrag
 			}
 
             /*
-                If adding new profile, check to see if name of profile is taken:
-                If taken, produce an error
+                Produces an error if:
+                - name of profile is taken and adding a new profile
+                - changed profile name is taken
             */
-			if (!isEditingProfile)
+			if (dbHandler.profileExists(name.getText().toString().trim()))
 			{
-				if (dbHandler.profileExists(name.getText().toString().trim()))
+				if (!isEditingProfile || !name.getText().toString().trim().equals(profile.getName()))
 				{
 					isError = true;
 					name.setError("Name already exists");
 				}
 			}
+
 
 			if (!isError)
 			{
