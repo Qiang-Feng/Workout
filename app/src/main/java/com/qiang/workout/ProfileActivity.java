@@ -2,7 +2,6 @@ package com.qiang.workout;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -133,16 +132,11 @@ public class ProfileActivity extends AppCompatActivity implements TimeSelectFrag
             */
 			if (!isEditingProfile)
 			{
-				String[] profileArgs = { name.getText().toString().trim() };
-				Cursor profile = dbHandler.getReadableDatabase().rawQuery("SELECT '1' FROM " + DBHandler.TABLE_PROFILES + " WHERE name = ?", profileArgs);
-
-				if (profile.getCount() != 0)
+				if (dbHandler.profileExists(name.getText().toString().trim()))
 				{
 					isError = true;
 					name.setError("Name already exists");
 				}
-
-				profile.close();
 			}
 
 			if (!isError)
