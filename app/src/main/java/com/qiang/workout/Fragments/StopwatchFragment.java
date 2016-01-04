@@ -147,6 +147,7 @@ public class StopwatchFragment extends Fragment
 				// Saves the stopwatch time to database
 				StopwatchTime stopwatchTime = new StopwatchTime();
 				stopwatchTime.setTime((int) timeWhenPaused / 1000);
+				stopwatchTime.setCategory(selectedCategory.getID());
 				stopwatchTime.setRecordDate((int) System.currentTimeMillis() / 1000);
 
 				dbHandler.addStopwatchTime(stopwatchTime);
