@@ -6,4 +6,14 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 tools:context="com.qiang.workout.GraphActivity">
 
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin">
+    </com.github.mikephil.charting.charts.BarChart>
+
 </RelativeLayout>
