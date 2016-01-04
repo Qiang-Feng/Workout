@@ -35,4 +35,30 @@ public class StopwatchTime
 	{
 		this.time = time;
 	}
+
+	public String getTimeAsString()
+	{
+		int minutes = time / 60;
+		int seconds = time % 60;
+
+		String timeString = "";
+
+		// Prepends leading 0 to minutes if needed
+		if (minutes < 10)
+		{
+			timeString += "0";
+		}
+		timeString += minutes;
+
+		timeString += ":";
+
+		// Prepends leading 0 to seconds if needed
+		if (seconds < 10)
+		{
+			timeString += "0";
+		}
+		timeString += seconds;
+
+		return timeString;
+	}
 }

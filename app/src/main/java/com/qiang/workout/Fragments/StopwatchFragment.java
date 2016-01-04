@@ -7,10 +7,22 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.qiang.workout.Models.Category;
+import com.qiang.workout.Models.StopwatchTime;
 import com.qiang.workout.R;
+import com.qiang.workout.Utilities.DBHandler;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class StopwatchFragment extends Fragment
 {
@@ -26,7 +38,13 @@ public class StopwatchFragment extends Fragment
 	private View resumeStopContainer;
 	private View saveResetContainer;
 
+	private Spinner spinner;
 	private CardView categorySpinnerCard;
+	private Map<Integer, Integer> categoryIDMap;
+	private Category selectedCategory;
+	private TextView textCategorySpinner;
+
+	private DBHandler dbHandler;
 
 	private long timeWhenPaused;
 
@@ -46,10 +64,16 @@ public class StopwatchFragment extends Fragment
 		buttonSave = (Button) view.findViewById(R.id.button_save);
 		buttonReset = (Button) view.findViewById(R.id.button_reset);
 
+		textCategorySpinner = (TextView) view.findViewById(R.id.category_spinner_text);
+		spinner = (Spinner) view.findViewById(R.id.category_spinner);
 		categorySpinnerCard = (CardView) view.findViewById(R.id.category_spinner_card);
 
 		resumeStopContainer = view.findViewById(R.id.resume_stop_container);
 		saveResetContainer = view.findViewById(R.id.save_reset_container);
+
+		categoryIDMap = new HashMap<>();
+
+		dbHandler = new DBHandler(getActivity(), null, null, 1);
 
 		// Handles start button clicks
 		buttonStart.setOnClickListener(new View.OnClickListener()
@@ -74,7 +98,7 @@ public class StopwatchFragment extends Fragment
 			public void onClick(View v)
 			{
 				// Makes note of stopwatch time when paused
-				timeWhenPaused = stopwatch.getBase() - SystemClock.elapsedRealtime();
+				timeWhenPaused = SystemClock.elapsedRealtime() - stopwatch.getBase();
 				stopwatch.stop();
 
 				// Hides pause button; show resume and stop buttons
@@ -90,7 +114,7 @@ public class StopwatchFragment extends Fragment
 			public void onClick(View v)
 			{
 				// Starts stopwatch at paused time
-				stopwatch.setBase(SystemClock.elapsedRealtime() + timeWhenPaused);
+				stopwatch.setBase(SystemClock.elapsedRealtime() - timeWhenPaused);
 				stopwatch.start();
 
 				// Hide resume and stop buttons; show pause button
@@ -120,7 +144,15 @@ public class StopwatchFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
+				// Saves the stopwatch time to database
+				StopwatchTime stopwatchTime = new StopwatchTime();
+				stopwatchTime.setTime((int) timeWhenPaused / 1000);
+				stopwatchTime.setRecordDate((int) System.currentTimeMillis() / 1000);
 
+				dbHandler.addStopwatchTime(stopwatchTime);
+
+				// Resets the stopwatch
+				buttonReset.performClick();
 			}
 		});
 
@@ -142,6 +174,60 @@ public class StopwatchFragment extends Fragment
 			}
 		});
 
+		// Sets the onClickListener for the category selection card
+		categorySpinnerCard.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				spinner.performClick();
+			}
+		});
+
+		// Handles category selection
+		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+		{
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+			{
+				// Create selected category
+				selectedCategory = dbHandler.getCategory(categoryIDMap.get(position));
+
+				// Set category card text to category name
+				textCategorySpinner.setText(selectedCategory.getName());
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent)
+			{
+
+			}
+		});
+
+		// Load the categories in the spinner if they exist
+		if (dbHandler.getCategoriesCount() != 0)
+		{
+			loadCategorySpinnerItems();
+		}
+
 		return view;
+	}
+
+	private void loadCategorySpinnerItems()
+	{
+		List<Category> categoryList = dbHandler.allCategories();
+		List<String> categoryString = new ArrayList<>();
+
+        /*
+            Add each category name to a list (to show in spinner)
+            Also updates the categoryIDMap
+        */
+		for (int i = 0; i < categoryList.size(); i++)
+		{
+			categoryString.add(i, categoryList.get(i).getName());
+			categoryIDMap.put(i, categoryList.get(i).getID());
+		}
+
+		spinner.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_dropdown_item, categoryString));
 	}
 }
