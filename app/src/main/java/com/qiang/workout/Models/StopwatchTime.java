@@ -4,6 +4,7 @@ public class StopwatchTime
 {
 	private int id;
 	private int recordDate;
+	private int category;
 	private int time;
 
 	public int getID()
@@ -24,6 +25,16 @@ public class StopwatchTime
 	public void setRecordDate(int recordDate)
 	{
 		this.recordDate = recordDate;
+	}
+
+	public int getCategory()
+	{
+		return category;
+	}
+
+	public void setCategory(int category)
+	{
+		this.category = category;
 	}
 
 	public int getTime()

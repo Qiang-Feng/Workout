@@ -33,6 +33,7 @@ public class DBHandler extends SQLiteOpenHelper
 	// Stopwatch times table
 	public static final String TABLE_STOPWATCH_TIMES = "stopwatchTimes";
 	public static final String STOPWATCH_TIMES_RECORD_DATE = "recordDate";
+	public static final String STOPWATCH_TIMES_CATEGORY = "category";
 	public static final String STOPWATCH_TIMES_TIME = "time";
 
 	private static final String DATABASE_NAME = "workout.db";
@@ -70,6 +71,7 @@ public class DBHandler extends SQLiteOpenHelper
 		String queryStopwatchTimes = "CREATE TABLE " + TABLE_STOPWATCH_TIMES + "("
 				+ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+ STOPWATCH_TIMES_RECORD_DATE + " INTEGER, "
+				+ STOPWATCH_TIMES_CATEGORY + " INTEGER, "
 				+ STOPWATCH_TIMES_TIME + " INTEGER "
 				+ ")";
 
@@ -360,6 +362,7 @@ public class DBHandler extends SQLiteOpenHelper
 
 		// Adds values set in StopwatchTime object
 		values.put(STOPWATCH_TIMES_RECORD_DATE, stopwatchTime.getRecordDate());
+		values.put(STOPWATCH_TIMES_CATEGORY, stopwatchTime.getCategory());
 		values.put(STOPWATCH_TIMES_TIME, stopwatchTime.getTime());
 
 		SQLiteDatabase db = getWritableDatabase();
@@ -378,12 +381,12 @@ public class DBHandler extends SQLiteOpenHelper
 		return stopwatchTimesCount;
 	}
 
-	public List<StopwatchTime> allStopwatchTimes()
+	public List<StopwatchTime> allStopwatchTimes(Category category)
 	{
 		List<StopwatchTime> stopwatchTimesList = new ArrayList<>();
 
 		SQLiteDatabase db = getWritableDatabase();
-		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_STOPWATCH_TIMES, null);
+		Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_STOPWATCH_TIMES + " WHERE " + STOPWATCH_TIMES_CATEGORY + " = " + category.getID(), null);
 
 		if (cursor.moveToFirst())
 		{
@@ -394,7 +397,8 @@ public class DBHandler extends SQLiteOpenHelper
 				StopwatchTime stopwatchTime = new StopwatchTime();
 				stopwatchTime.setID(cursor.getInt(0));
 				stopwatchTime.setRecordDate(cursor.getInt(1));
-				stopwatchTime.setTime(cursor.getInt(2));
+				stopwatchTime.setCategory(cursor.getInt(2));
+				stopwatchTime.setTime(cursor.getInt(3));
 
 				stopwatchTimesList.add(stopwatchTime);
 			}
@@ -418,7 +422,8 @@ public class DBHandler extends SQLiteOpenHelper
 		StopwatchTime stopwatchTime = new StopwatchTime();
 		stopwatchTime.setID(cursor.getInt(0));
 		stopwatchTime.setRecordDate(cursor.getInt(1));
-		stopwatchTime.setTime(cursor.getInt(2));
+		stopwatchTime.setCategory(cursor.getInt(2));
+		stopwatchTime.setTime(cursor.getInt(3));
 
 		cursor.close();
 
