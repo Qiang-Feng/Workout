@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.qiang.workout.GraphActivity;
 import com.qiang.workout.Models.Category;
 import com.qiang.workout.R;
 import com.qiang.workout.StopwatchTimesActivity;
@@ -125,7 +126,10 @@ public class StopwatchCategoriesFragment extends Fragment
 		}
 		else if (item.getTitle().toString().equals(getResources().getString(R.string.view_graph)))
 		{
-			// TODO: Create view graph activity
+			// Direct user to view graph activity
+			Intent intent = new Intent(getActivity(), GraphActivity.class);
+			intent.putExtra("stopwatchCategoryID", categoryIDMap.get(info.position));
+			startActivity(intent);
 		}
 
 		return super.onContextItemSelected(item);
