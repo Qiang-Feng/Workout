@@ -3,6 +3,7 @@ package com.qiang.workout.Fragments;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.ContextMenu;
@@ -18,6 +19,7 @@ import android.widget.ListView;
 
 import com.qiang.workout.Models.Category;
 import com.qiang.workout.R;
+import com.qiang.workout.StopwatchTimesActivity;
 import com.qiang.workout.Utilities.DBHandler;
 
 import java.util.ArrayList;
@@ -116,7 +118,10 @@ public class StopwatchCategoriesFragment extends Fragment
 		}
 		else if (item.getTitle().toString().equals(getResources().getString(R.string.view_times)))
 		{
-			// TODO: Create view times activity
+			// Direct user to view times activity
+			Intent intent = new Intent(getActivity(), StopwatchTimesActivity.class);
+			intent.putExtra("stopwatchCategoryID", categoryIDMap.get(info.position));
+			startActivity(intent);
 		}
 		else if (item.getTitle().toString().equals(getResources().getString(R.string.view_graph)))
 		{
