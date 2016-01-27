@@ -1,7 +1,5 @@
 package com.qiang.workout;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -157,12 +155,6 @@ public class ProfileActivity extends AppCompatActivity implements TimeSelectFrag
 				finish();
 			}
 		}
-		else if (item.getItemId() == android.R.id.home) // If user clicked back arrow
-		{
-			// Prompts user to either discard or continue editing
-			displayCancelDialog();
-			return true;
-		}
 
 		return super.onOptionsItemSelected(item);
 	}
@@ -201,46 +193,6 @@ public class ProfileActivity extends AppCompatActivity implements TimeSelectFrag
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_profile, menu);
 		return true;
-	}
-
-	private void displayCancelDialog()
-	{
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Cancel");
-
-		// Set appropriate message depending on which operation is taking place
-		if (isEditingProfile)
-		{
-			builder.setMessage("Are you sure you want to discard your changes?");
-		}
-		else
-		{
-			builder.setMessage("Are you sure you want to discard this profile?");
-		}
-
-		// Adds the "Keep Editing" button
-		builder.setPositiveButton(R.string.keep_editing, new DialogInterface.OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
-			{
-				// Nothing here: alert dialog just closes
-			}
-		});
-
-		// Adds the "Discard" button
-		builder.setNegativeButton(R.string.discard, new DialogInterface.OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
-			{
-				// Closes this activity and directs users back to previous activity
-				finish();
-			}
-		});
-
-		// Displays the alert dialog
-		builder.create().show();
 	}
 
 	@Override
