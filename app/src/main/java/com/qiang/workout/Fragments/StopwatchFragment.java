@@ -144,13 +144,16 @@ public class StopwatchFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				// Saves the stopwatch time to database
-				StopwatchTime stopwatchTime = new StopwatchTime();
-				stopwatchTime.setTime((int) timeWhenPaused / 1000);
-				stopwatchTime.setCategory(selectedCategory.getID());
-				stopwatchTime.setRecordDate(System.currentTimeMillis() / 1000);
+				if (selectedCategory != null)
+				{
+					// Saves the stopwatch time to database
+					StopwatchTime stopwatchTime = new StopwatchTime();
+					stopwatchTime.setTime((int) timeWhenPaused / 1000);
+					stopwatchTime.setCategory(selectedCategory.getID());
+					stopwatchTime.setRecordDate(System.currentTimeMillis() / 1000);
 
-				dbHandler.addStopwatchTime(stopwatchTime);
+					dbHandler.addStopwatchTime(stopwatchTime);
+				}
 
 				// Resets the stopwatch
 				buttonReset.performClick();
