@@ -77,7 +77,7 @@ public class GraphActivity extends AppCompatActivity
 		for (int i = 0; i < times.size(); i++)
 		{
 			entries.add(new BarEntry(times.get(i).getTime(), i));
-			dateAxisLabels.add(new SimpleDateFormat("dd/MM/yy").format(times.get(i).getRecordDate()));
+			dateAxisLabels.add(new SimpleDateFormat("dd/MM/yy").format(times.get(i).getRecordDate() * 1000L));
 		}
 
 		BarDataSet dataSet = new BarDataSet(entries, "");

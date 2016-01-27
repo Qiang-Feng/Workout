@@ -148,7 +148,7 @@ public class StopwatchFragment extends Fragment
 				StopwatchTime stopwatchTime = new StopwatchTime();
 				stopwatchTime.setTime((int) timeWhenPaused / 1000);
 				stopwatchTime.setCategory(selectedCategory.getID());
-				stopwatchTime.setRecordDate((int) System.currentTimeMillis() / 1000);
+				stopwatchTime.setRecordDate(System.currentTimeMillis() / 1000);
 
 				dbHandler.addStopwatchTime(stopwatchTime);
 

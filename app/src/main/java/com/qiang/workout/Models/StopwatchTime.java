@@ -3,7 +3,7 @@ package com.qiang.workout.Models;
 public class StopwatchTime
 {
 	private int id;
-	private int recordDate;
+	private long recordDate;
 	private int category;
 	private int time;
 
@@ -17,12 +17,12 @@ public class StopwatchTime
 		this.id = id;
 	}
 
-	public int getRecordDate()
+	public long getRecordDate()
 	{
 		return recordDate;
 	}
 
-	public void setRecordDate(int recordDate)
+	public void setRecordDate(long recordDate)
 	{
 		this.recordDate = recordDate;
 	}
