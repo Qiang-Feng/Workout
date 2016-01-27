@@ -149,13 +149,6 @@ public class BaseActivity extends AppCompatActivity
 			return true;
 		}
 
-		// Handles item selection in action bar
-		switch (item.getItemId())
-		{
-			case R.id.action_settings:
-				return true;
-		}
-
 		return super.onOptionsItemSelected(item);
 	}
 }
