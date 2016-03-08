@@ -26,26 +26,28 @@ import java.util.Map;
 
 public class StopwatchFragment extends Fragment
 {
-	private Chronometer stopwatch;
-
+	// Stopwatch buttons
 	private Button buttonStart;
 	private Button buttonPause;
 	private Button buttonResume;
 	private Button buttonStop;
 	private Button buttonSave;
 	private Button buttonReset;
-
 	private View resumeStopContainer;
 	private View saveResetContainer;
 
+	// Stopwatch category selection
 	private Spinner spinner;
 	private CardView categorySpinnerCard;
 	private Map<Integer, Integer> categoryIDMap;
 	private Category selectedCategory;
 	private TextView textCategorySpinner;
 
+	// Database
 	private DBHandler dbHandler;
 
+	// Stopwatch
+	private Chronometer stopwatch;
 	private long timeWhenPaused;
 
 	@Override
@@ -54,26 +56,28 @@ public class StopwatchFragment extends Fragment
 		// Inflates the view
 		View view = inflater.inflate(R.layout.fragment_stopwatch, container, false);
 
-		// Initialise variables
-		stopwatch = (Chronometer) view.findViewById(R.id.stopwatch);
-
+		// Initialising components
+		// Stopwatch buttons
 		buttonStart = (Button) view.findViewById(R.id.button_start);
 		buttonPause = (Button) view.findViewById(R.id.button_pause);
 		buttonResume = (Button) view.findViewById(R.id.button_resume);
 		buttonStop = (Button) view.findViewById(R.id.button_stop);
 		buttonSave = (Button) view.findViewById(R.id.button_save);
 		buttonReset = (Button) view.findViewById(R.id.button_reset);
-
-		textCategorySpinner = (TextView) view.findViewById(R.id.category_spinner_text);
-		spinner = (Spinner) view.findViewById(R.id.category_spinner);
-		categorySpinnerCard = (CardView) view.findViewById(R.id.category_spinner_card);
-
 		resumeStopContainer = view.findViewById(R.id.resume_stop_container);
 		saveResetContainer = view.findViewById(R.id.save_reset_container);
 
+		// Stopwatch category selection
+		spinner = (Spinner) view.findViewById(R.id.category_spinner);
+		textCategorySpinner = (TextView) view.findViewById(R.id.category_spinner_text);
+		categorySpinnerCard = (CardView) view.findViewById(R.id.category_spinner_card);
 		categoryIDMap = new HashMap<>();
 
+		// Database
 		dbHandler = new DBHandler(getActivity(), null, null, 1);
+
+		// Stopwatch
+		stopwatch = (Chronometer) view.findViewById(R.id.stopwatch);
 
 		// Handles start button clicks
 		buttonStart.setOnClickListener(new View.OnClickListener()
@@ -144,6 +148,7 @@ public class StopwatchFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
+				// Only perform the save if the user has selected a category
 				if (selectedCategory != null)
 				{
 					// Saves the stopwatch time to database
@@ -219,19 +224,20 @@ public class StopwatchFragment extends Fragment
 
 	private void loadCategorySpinnerItems()
 	{
+		/*
+	        Puts all category names in the categoryString list (to show in spinner)
+            Updates the categoryIDMap - keeps track of which category is in which position in the spinner
+        */
 		List<Category> categoryList = dbHandler.allCategories();
 		List<String> categoryString = new ArrayList<>();
 
-        /*
-            Add each category name to a list (to show in spinner)
-            Also updates the categoryIDMap
-        */
 		for (int i = 0; i < categoryList.size(); i++)
 		{
 			categoryString.add(i, categoryList.get(i).getName());
 			categoryIDMap.put(i, categoryList.get(i).getID());
 		}
 
+		// Displays the category names in the categoryString array in the spinner
 		spinner.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_dropdown_item, categoryString));
 	}
 }

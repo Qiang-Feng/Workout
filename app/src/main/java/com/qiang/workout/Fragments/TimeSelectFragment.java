@@ -14,6 +14,10 @@ public class TimeSelectFragment extends DialogFragment
 {
 	private static boolean isMinutes = false;
 
+	/*
+		According to the Android documentation, this method
+		should be used for initialising a new DialogFragment
+	*/
 	public static TimeSelectFragment newInstance(boolean isMinutes)
 	{
 		TimeSelectFragment.isMinutes = isMinutes;
@@ -24,10 +28,14 @@ public class TimeSelectFragment extends DialogFragment
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());   // Initialise builder variable as a new AlertDialog object
-		final NumberPicker picker = new NumberPicker(getActivity());            // Initialises picker variable
+		// Initialise builder variable as a new AlertDialog object
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-		picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS); // Disable soft keyboard on NumberPicker
+		// Initialises the NumberPicker object
+		final NumberPicker picker = new NumberPicker(getActivity());
+
+		// Disable soft keyboard on NumberPicker
+		picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
 		// Sets appropriate maximum values for seconds and minutes
 		if (isMinutes)
@@ -42,6 +50,7 @@ public class TimeSelectFragment extends DialogFragment
 		// Sets the time picker as the display ("view") for the dialog
 		builder.setView(picker);
 
+		// Sets up the "OK" button for the number picking popup dialog
 		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
 		{
 			@Override
@@ -59,6 +68,7 @@ public class TimeSelectFragment extends DialogFragment
 			}
 		});
 
+		// Sets up the "Cancel" dialog
 		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
 		{
 			@Override
@@ -75,7 +85,7 @@ public class TimeSelectFragment extends DialogFragment
 	{
 		TimeSelectFragmentListener returnObject;
 
-		// Gets calling object to return time value to
+		// Gets calling object to return time value to (whether it is an Activity or a Fragment)
 		if (getTargetFragment() == null)
 		{
 			returnObject = (TimeSelectFragmentListener) getActivity();

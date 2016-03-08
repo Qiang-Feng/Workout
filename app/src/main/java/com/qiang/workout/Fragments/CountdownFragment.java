@@ -32,33 +32,34 @@ import java.util.Map;
 
 public class CountdownFragment extends Fragment
 {
+	// Countdown timer buttons
 	private Button buttonStart;
 	private Button buttonPause;
 	private Button buttonStop;
 	private Button buttonResume;
 	private View pauseStopContainer;
 
+	// Countdown timer
 	private TextView textTimeMinutes;
 	private TextView textTimeSeconds;
 	private TextView textRoundNumber;
-	private TextView textProfileSpinner;
-
 	private ProgressBar progressBar;
 	private CountDown countDownTimer;
+	private boolean timerStarted = false;
+	private int roundNumber = 1;
 
-	private Spinner spinner;
+	// Profile selection
+	private TextView textProfileSpinner;
 	private CardView profileSpinnerCard;
-
-	private DBHandler dbHandler;
-
+	private Spinner spinner;
 	private Profile selectedProfile;
 	private Map<Integer, Integer> profileIDMap;
 
-	private int roundNumber = 1;
-	private boolean timerStarted = false;
+	// Database
+	private DBHandler dbHandler;
 
+	// Beep sound components
 	private ToneGenerator toneGenerator;
-
 	public static final int INTERVAL_BEEP = ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD;
 	public static final int FINISHED_BEEP = ToneGenerator.TONE_CDMA_CALLDROP_LITE;
 
@@ -69,27 +70,30 @@ public class CountdownFragment extends Fragment
 		// Inflates the view
 		final View view = inflater.inflate(R.layout.fragment_countdown, container, false);
 
-		// Initialises variables
-		progressBar = (ProgressBar) view.findViewById(R.id.progress_circular);
-
+		// Initialising components
+		// Countdown timer buttons
 		buttonStart = (Button) view.findViewById(R.id.button_start);
 		buttonPause = (Button) view.findViewById(R.id.button_pause);
 		buttonStop = (Button) view.findViewById(R.id.button_stop);
 		buttonResume = (Button) view.findViewById(R.id.button_resume);
 		pauseStopContainer = view.findViewById(R.id.pause_stop_container);
 
+		// Countdown timer
+		progressBar = (ProgressBar) view.findViewById(R.id.progress_circular);
 		textTimeMinutes = (TextView) view.findViewById(R.id.text_time_minutes);
 		textTimeSeconds = (TextView) view.findViewById(R.id.text_time_seconds);
 		textRoundNumber = (TextView) view.findViewById(R.id.text_round_number);
-		textProfileSpinner = (TextView) view.findViewById(R.id.profile_spinner_text);
 
+		// Profile selection
 		spinner = (Spinner) view.findViewById(R.id.profile_spinner);
 		profileSpinnerCard = (CardView) view.findViewById(R.id.profile_spinner_card);
-
+		textProfileSpinner = (TextView) view.findViewById(R.id.profile_spinner_text);
 		profileIDMap = new HashMap<>();
 
+		// Database
 		dbHandler = new DBHandler(getActivity(), null, null, 1);
 
+		// Beep sound generator
 		toneGenerator = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
 
 		// Handles pause button clicks
@@ -224,6 +228,7 @@ public class CountdownFragment extends Fragment
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setMessage("Looks like you don't have any profiles!");
 
+			// Sets up the "New Profile" button
 			builder.setPositiveButton(R.string.new_profile, new DialogInterface.OnClickListener()
 			{
 				@Override
@@ -239,6 +244,7 @@ public class CountdownFragment extends Fragment
 		}
 		else
 		{
+			// Load all countdown profiles into the spinner
 			loadProfileSpinnerItems();
 		}
 
@@ -260,6 +266,7 @@ public class CountdownFragment extends Fragment
 			profileIDMap.put(i, profileList.get(i).getID());
 		}
 
+		// Adds the countdown profiles list to the spinner
 		spinner.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_dropdown_item, profilesString));
 	}
 
@@ -281,9 +288,11 @@ public class CountdownFragment extends Fragment
 		long millisTemp = 0;
 		timerStarted = true;
 
+		// Gets the countdown starting time in milliseconds
 		millisTemp += Integer.parseInt((String) textTimeMinutes.getText()) * 60 * 1000;
 		millisTemp += Integer.parseInt((String) textTimeSeconds.getText()) * 1000;
 
+		// Allows inner classes to access the countdown starting time
 		final long millis = millisTemp;
 
 		countDownTimer = new CountDown(millis, 10)
@@ -291,6 +300,7 @@ public class CountdownFragment extends Fragment
 			@Override
 			public void onTick(long millisUntilFinished)
 			{
+				// Updates the progress bar percentage
 				progressBar.setProgress((int) Math.round(((millis - millisUntilFinished) / (double) millis) * 10000));
 
                 /*

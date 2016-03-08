@@ -30,12 +30,14 @@ import java.util.Map;
 
 public class StopwatchCategoriesFragment extends Fragment
 {
+	// Categories list components
 	private ListView categoriesView;
-	private List<String> categoryStrings;
 	private Map<Integer, Integer> categoryIDMap;
 
+	// Database
 	private DBHandler dbHandler;
 
+	// Values for the actions add and rename
 	private static final int CATEGORY_ADD = 1;
 	private static final int CATEGORY_RENAME = 2;
 
@@ -46,14 +48,17 @@ public class StopwatchCategoriesFragment extends Fragment
 		// Inflates the view
 		View view = inflater.inflate(R.layout.fragment_stopwatch_categories, container, false);
 
-		// Initialise variables
+		// Initialising components
+		// Categories list
 		categoriesView = (ListView) view.findViewById(R.id.categories_list);
-		dbHandler = new DBHandler(getActivity(), null, null, 1);
 		categoryIDMap = new HashMap<>();
+
+		// Database
+		dbHandler = new DBHandler(getActivity(), null, null, 1);
 
 		loadCategoriesList();
 
-		// Allows for context menu when selecting a category
+		// Creates a context menu when selecting a category
 		registerForContextMenu(categoriesView);
 
 		// Handles add category button click
@@ -72,11 +77,11 @@ public class StopwatchCategoriesFragment extends Fragment
 	private void loadCategoriesList()
 	{
 		/*
-	        Puts all category names in a list: categoryStrings
-            Also updates the categoryIDMap
+	        Puts all category names in the categoryStrings list
+            Updates the categoryIDMap - keeps track of which category is in which position in the list
         */
 		List<Category> categoryList = dbHandler.allCategories();
-		categoryStrings = new ArrayList<>();
+		List<String> categoryStrings = new ArrayList<>();
 
 		for (int i = 0; i < categoryList.size(); i++)
 		{
@@ -148,6 +153,7 @@ public class StopwatchCategoriesFragment extends Fragment
 		// Sets a text input as the view/display for the dialog
 		builder.setView(R.layout.dialog_edit_text);
 
+		// Sets up the "OK" button in the dialog
 		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
 		{
 			@Override
@@ -157,6 +163,7 @@ public class StopwatchCategoriesFragment extends Fragment
 			}
 		});
 
+		// Sets up the "Cancel" button in the dialog
 		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
 		{
 			@Override

@@ -25,10 +25,11 @@ import java.util.Map;
 
 public class CountdownProfilesFragment extends Fragment
 {
+	// Profiles list components
 	private ListView profilesView;
-	private List<String> profileStrings;
 	private Map<Integer, Integer> profileIDMap;
 
+	// Database
 	private DBHandler dbHandler;
 
 	@Nullable
@@ -38,12 +39,17 @@ public class CountdownProfilesFragment extends Fragment
 		// Inflates the view
 		View view = inflater.inflate(R.layout.fragment_countdown_profiles, container, false);
 
-		// Initialise variables
+		// Initialising components
+		// Profiles list
 		profilesView = (ListView) view.findViewById(R.id.profiles_list);
-		dbHandler = new DBHandler(getActivity(), null, null, 1);
 		profileIDMap = new HashMap<>();
 
+		// Database
+		dbHandler = new DBHandler(getActivity(), null, null, 1);
+
 		loadProfileList();
+
+		// Creates popup dialog with actions when an item has been selected in the list
 		registerForContextMenu(profilesView);
 
 		// Handles add profile button click
@@ -64,11 +70,11 @@ public class CountdownProfilesFragment extends Fragment
 	private void loadProfileList()
 	{
 	    /*
-	        Puts all profile names in a list: profileStrings
-            Also updates the profileIDMap
+	        Puts all profile names in the profileStrings list
+            Updates the profileIDMap - keeps track of which profile is in which position in the list
         */
 		List<Profile> profileList = dbHandler.allProfiles();
-		profileStrings = new ArrayList<>();
+		List<String> profileStrings = new ArrayList<>();
 
 		for (int i = 0; i < profileList.size(); i++)
 		{
@@ -105,6 +111,7 @@ public class CountdownProfilesFragment extends Fragment
 		}
 		else if (item.getTitle().toString().equals(getResources().getString(R.string.edit)))
 		{
+			// Redirects user to the ProfileActivity screen (for editing of the chosen profile)
 			Intent intent = new Intent(getActivity(), ProfileActivity.class);
 			intent.putExtra("profileID", profileIDMap.get(info.position));
 			startActivityForResult(intent, 1);
