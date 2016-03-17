@@ -20,12 +20,14 @@ import java.util.Map;
 
 public class StopwatchTimesActivity extends AppCompatActivity
 {
+	// Stopwatch times list components
 	private ListView stopwatchTimesView;
 	private List<String> stopwatchTimesStrings;
 	private Map<Integer, Integer> stopwatchTimesIDMap;
-	private Category selectedCategory;
 
+	// Database
 	private DBHandler dbHandler;
+	private Category selectedCategory;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -35,13 +37,18 @@ public class StopwatchTimesActivity extends AppCompatActivity
 		// Sets the activity_stopwatch_times as this activity's display
 		setContentView(R.layout.activity_stopwatch_times);
 
-		// Initialise variables
+		// Initialising components
+		// Stopwatch times list components
 		stopwatchTimesView = (ListView) findViewById(R.id.stopwatch_times_list);
-		dbHandler = new DBHandler(this, null, null, 1);
 		stopwatchTimesIDMap = new HashMap<>();
+
+		// Database
+		dbHandler = new DBHandler(this, null, null, 1);
 		selectedCategory = dbHandler.getCategory(getIntent().getIntExtra("stopwatchCategoryID", 0));
 
 		loadStopwatchTimesList();
+
+		// Creates popup dialog with actions when an item has been selected in the list
 		registerForContextMenu(stopwatchTimesView);
 	}
 
@@ -73,8 +80,8 @@ public class StopwatchTimesActivity extends AppCompatActivity
 	private void loadStopwatchTimesList()
 	{
 		/*
-	        Puts all stopwatch times in a list: stopwatchTimesStrings
-            Also updates the stopwatchTimesIDMap
+	        Puts all stopwatch times in the stopwatchTimesStrings list
+            Updates the stopwatchTimesIDMap - keeps track of which stopwatch time is in which position in the list
         */
 		List<StopwatchTime> stopwatchTimeList = dbHandler.allStopwatchTimes(selectedCategory);
 		stopwatchTimesStrings = new ArrayList<>();
@@ -85,7 +92,7 @@ public class StopwatchTimesActivity extends AppCompatActivity
 			stopwatchTimesIDMap.put(i, stopwatchTimeList.get(i).getID());
 		}
 
-		// Displays the profileStrings array in the profiles list
+		// Displays the stopwatchTimesStrings array in the list
 		stopwatchTimesView.setAdapter(new ArrayAdapter<>(this, R.layout.list_item, stopwatchTimesStrings));
 	}
 }

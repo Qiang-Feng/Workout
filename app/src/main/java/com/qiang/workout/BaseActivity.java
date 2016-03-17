@@ -21,14 +21,13 @@ import com.qiang.workout.Fragments.StopwatchFragment;
 
 public class BaseActivity extends AppCompatActivity
 {
+	// Navigation drawer components
 	private ListView drawerView;
 	private DrawerLayout drawerLayout;
 	private String[] drawerItemStrings;
 	private ActionBarDrawerToggle drawerToggle;
 
-	/*
-		Sets up the BaseActivity (called when the activity is first created)
-	*/
+	// Sets up the BaseActivity (called when the activity is first created)
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -37,7 +36,7 @@ public class BaseActivity extends AppCompatActivity
 		// Displays the "activity_base" layout
 		setContentView(R.layout.activity_base);
 
-		// Initialising variables
+		// Initialise navigation drawer components
 		drawerView = (ListView) findViewById(R.id.navigation_drawer);
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawerItemStrings = getResources().getStringArray(R.array.navigation_drawer_items);
@@ -70,6 +69,7 @@ public class BaseActivity extends AppCompatActivity
 		// Removes warning about java.lang.NullPointerException
 		assert getSupportActionBar() != null;
 
+		// Ensures clicking on the drawer toggle button opens the navigation drawer
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -119,9 +119,14 @@ public class BaseActivity extends AppCompatActivity
 				.replace(R.id.content_frame, fragment)
 				.commit();
 
-		setTitle(drawerItemStrings[position]);      // Changes the action bar title to corresponding item user has selected
-		drawerView.setItemChecked(position, true);  // Sets item selected by user as checked
-		drawerLayout.closeDrawer(drawerView);       // Closes the navigation drawer
+		// Changes the action bar title to corresponding item user has selected
+		setTitle(drawerItemStrings[position]);
+
+		// Sets item selected by user as checked
+		drawerView.setItemChecked(position, true);
+
+		// Closes the navigation drawer
+		drawerLayout.closeDrawer(drawerView);
 	}
 
 	@Override

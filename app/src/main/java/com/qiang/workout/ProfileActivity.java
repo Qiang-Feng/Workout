@@ -15,9 +15,11 @@ import com.qiang.workout.Utilities.TextTimeClickListener;
 
 public class ProfileActivity extends AppCompatActivity implements TimeSelectFragmentListener
 {
+	// Values for the actions add and edit
 	public static final int PROFILE_ADDED = 1;
 	public static final int PROFILE_EDITED = 2;
 
+	// Input area components
 	private EditText name;
 	private EditText repeatNumber;
 	private TextView textTimeMinutes;
@@ -25,9 +27,11 @@ public class ProfileActivity extends AppCompatActivity implements TimeSelectFrag
 	private TextView timeError;
 	private CheckBox repeat;
 
+	// Database
 	private DBHandler dbHandler;
-	private Profile profile;
 
+	// Profile management
+	private Profile profile;
 	private boolean isEditingProfile = false;
 
 	@Override
@@ -38,7 +42,8 @@ public class ProfileActivity extends AppCompatActivity implements TimeSelectFrag
 		// Sets the activity_profile as this activity's display
 		setContentView(R.layout.activity_profile);
 
-		// Initialises variables
+		// Initialising components
+		// Input area components
 		name = (EditText) findViewById(R.id.profile_text_name);
 		repeatNumber = (EditText) findViewById(R.id.profile_text_repeat);
 		textTimeMinutes = (TextView) findViewById(R.id.profile_text_time_minutes);
@@ -46,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity implements TimeSelectFrag
 		timeError = (TextView) findViewById(R.id.profile_text_time_error);
 		repeat = (CheckBox) findViewById(R.id.profile_checkbox_repeat);
 
+		// Database
 		dbHandler = new DBHandler(this, null, null, 1);
 
 		// Handles click events for textTimeMinutes and textTimeSeconds
@@ -141,6 +147,7 @@ public class ProfileActivity extends AppCompatActivity implements TimeSelectFrag
 
 			if (!isError)
 			{
+				// Either adds or edits the profile depending on what's needed
 				if (isEditingProfile)
 				{
 					setResult(PROFILE_EDITED);

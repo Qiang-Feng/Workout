@@ -23,10 +23,12 @@ import java.util.List;
 
 public class GraphActivity extends AppCompatActivity
 {
+	// Bar chart components
 	private BarChart chart;
 	private ArrayList<BarEntry> entries;
 	private ArrayList<String> dateAxisLabels;
 
+	// Database
 	private DBHandler dbHandler;
 
 	@Override
@@ -52,6 +54,7 @@ public class GraphActivity extends AppCompatActivity
 		chart.getAxisLeft().setTextSize(13F);
 		chart.getXAxis().setTextSize(13F);
 
+		// Prevents the user from zooming into the graph and messing up the scaling
 		chart.setPinchZoom(false);
 		chart.setDoubleTapToZoomEnabled(false);
 
@@ -97,7 +100,7 @@ public class GraphActivity extends AppCompatActivity
 		// Retrieves the times from the database
 		List<StopwatchTime> times = dbHandler.allStopwatchTimes(dbHandler.getCategory(getIntent().getIntExtra("stopwatchCategoryID", 0)));
 
-		// Adds all times to the "entries" variable
+		// Adds all times to the "entries" list
 		for (int i = 0; i < times.size(); i++)
 		{
 			entries.add(new BarEntry(times.get(i).getTime(), i));
